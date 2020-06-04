@@ -232,84 +232,20 @@ class Reacteroids extends Component {
   }
 
 
-  render() {
-    // return(
-    //   <CurrentUserConsumer>
-    //     {({user, logout})} =>
-    //     {
-    //       <div>
-    //         {user
-    //         ? <div>Siema, {user.name}</div>
-    //         : <div>Zaloguj się</div>}
-    //       </div>
-    //     }
-    //   </CurrentUserConsumer>
-    // )
-
-    let endgame;
-    let message;
-
-    if (this.state.currentScore <= 0) {
-      message = '0 punktów... Słabo.';
-    } else if (this.state.currentScore >= this.state.topScore){
-      message = 'Najlepszy wynik z ' + this.state.currentScore + ' punkyów. Wow!';
-    } else {
-      message = "Chociaż " + this.state.currentScore + ' punktów :)'
-    }
-
-    if(!this.state.inGame){
-      endgame = (
-        <div className="endgame">
-          <p>Game over, man!</p>
-          <p>{message}</p>
-          <button
-            onClick={ this.startGame.bind(this) }>
-            try again?
-          </button>
-        </div>
-      )
-    }
-
-    return (
-      <div>
-        { endgame }
-        <div style={{
-              display: "flex"
-            }}>
-          <div>
-            <div>
-              <span className="score current-score" > Wynik: {this.state.currentScore} </span>
-              <span className="score top-score" > Najlepszy wynik: {this.state.topScore} </span>
-            </div>
-              <span className="controls" >
-                Użyj [A][S][W][D] lub [←][↑][↓][→] by poruszyć<br/>
-                Użyj [SPACE] by strzelić
-              </span>
-          </div>
-          <div>
-            <button
-            style={{
-              width: "auto",
-              borderRadius: "3px",
-              letterSpacing: "1.5px",
-              marginTop: "1rem"
-            }}
-            onClick={this.onLogoutClick}
-            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-            >
-            Wyloguj
-            </button>
-          </div>
-        </div>
-        <canvas ref="canvas"
-          width={this.state.screen.width * this.state.screen.ratio}
-          height={this.state.screen.height * this.state.screen.ratio}
-        />
-      </div>
-    );
-  }
-
   // render() {
+  //   // return(
+  //   //   <CurrentUserConsumer>
+  //   //     {({user, logout})} =>
+  //   //     {
+  //   //       <div>
+  //   //         {user
+  //   //         ? <div>Siema, {user.name}</div>
+  //   //         : <div>Zaloguj się</div>}
+  //   //       </div>
+  //   //     }
+  //   //   </CurrentUserConsumer>
+  //   // )
+
   //   let endgame;
   //   let message;
 
@@ -372,6 +308,91 @@ class Reacteroids extends Component {
   //     </div>
   //   );
   // }
+
+  render() {
+    let endgame;
+    let message;
+
+    if (this.state.currentScore <= 0) {
+      message = '0 punktów... Słabo.';
+    } else if (this.state.currentScore >= this.state.topScore){
+      message = 'Najlepszy wynik z ' + this.state.currentScore + ' punkyów. Wow!';
+    } else {
+      message = "Chociaż " + this.state.currentScore + ' punktów :)'
+    }
+
+    if(!this.state.inGame){
+      endgame = (
+        <div style={{
+          display: "flex",
+          position: "absolute",
+          color: "white"
+
+        }}>
+          <p>Przegrałeś</p>
+          <p>{message}</p>
+          <button className="btn green"
+            onClick={ this.startGame.bind(this) }>
+            Jeszcze raz?
+          </button>
+        </div>
+      )
+    }
+
+    return (
+      <div >
+      \
+        { endgame }
+
+        <div style={{
+              display: "flex",
+              position: "absolute",
+              color: "white"
+            }}>
+          <div>
+            <div style={{
+              display: "flex",
+              position: "absolute",
+              color: "white"  }}>
+              <span className="score current-score" > Wynik: {this.state.currentScore} </span>
+              <span className="score top-score" > Najlepszy wynik: {this.state.topScore} </span>
+            </div>
+              <span className="controls" >
+                Użyj [A][S][W][D] lub [←][↑][↓][→] by poruszyć<br/>
+                Użyj [SPACE] by strzelić
+              </span>
+          </div>
+
+
+          <div>
+            <button
+            style={{
+              width: "auto",
+              borderRadius: "3px",
+              letterSpacing: "1.5px",
+              marginTop: "1rem"
+            }}
+            onClick={this.onLogoutClick}
+            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+            >
+            Wyloguj
+            </button>
+          </div>
+        </div>
+
+
+        <div style={{
+          display: "flex" }}>
+          <canvas ref="canvas"
+            width={this.state.screen.width * this.state.screen.ratio}
+            height={this.state.screen.height * this.state.screen.ratio}
+          />
+        </div>
+
+
+      </div>
+    );
+  }
 }
 
 Reacteroids.propTypes = {
