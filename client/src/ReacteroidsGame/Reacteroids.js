@@ -324,13 +324,11 @@ class Reacteroids extends Component {
     if(!this.state.inGame){
       endgame = (
         <div style={{
-          display: "flex",
-          position: "absolute",
-          color: "white"
-
+          color: "white",
+          margin: 10
         }}>
-          <p>Przegrałeś</p>
-          <p>{message}</p>
+          <p style={{ color: "red"}}>Koniec gry</p>
+          <p style={{ color: "orange"}}>{message}</p>
           <button className="btn green"
             onClick={ this.startGame.bind(this) }>
             Jeszcze raz?
@@ -340,57 +338,56 @@ class Reacteroids extends Component {
     }
 
     return (
-      <div >
-      \
-        { endgame }
-
-        <div style={{
-              display: "flex",
-              position: "absolute",
-              color: "white"
-            }}>
-          <div>
-            <div style={{
-              display: "flex",
-              position: "absolute",
-              color: "white"  }}>
-              <span className="score current-score" > Wynik: {this.state.currentScore} </span>
-              <span className="score top-score" > Najlepszy wynik: {this.state.topScore} </span>
+      <div>
+          <div style={{
+                position: "absolute",
+                color: "white",
+                width: "100%",
+              }}>
+            <div style={{margin: 10}}>
+              <div>
+                <span className="score current-score" > Wynik:
+                <span style={{color: "green"}}> { this.state.currentScore } </span>
+                </span>
+                <span className="score top-score" > Najlepszy wynik:
+                <span style={{color: "green"}}> { this.state.topScore } </span>
+                 </span>
+              </div>
+                <span className="controls" >
+                  Użyj
+                  <span style={{color: "green"}}> [A] [S] [W] [D] lub [←] [↑] [↓] [→] </span>
+                   by poruszyć<br/>
+                  Użyj
+                  <span style={{color: "green"}}> [SPACE] </span>
+                   by strzelić
+                </span>
             </div>
-              <span className="controls" >
-                Użyj [A][S][W][D] lub [←][↑][↓][→] by poruszyć<br/>
-                Użyj [SPACE] by strzelić
-              </span>
+
+            { endgame }
+
+            <div style={{
+              position: "absolute",
+              right: 0,
+              top: 0
+            }}>
+              <button className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+              onClick={this.onLogoutClick}
+
+              >
+              Wyloguj
+              </button>
+            </div>
           </div>
 
 
-          <div>
-            <button
-            style={{
-              width: "auto",
-              borderRadius: "3px",
-              letterSpacing: "1.5px",
-              marginTop: "1rem"
-            }}
-            onClick={this.onLogoutClick}
-            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-            >
-            Wyloguj
-            </button>
+          <div style={{
+            display: "flex" }}>
+            <canvas ref="canvas"
+              width={this.state.screen.width * this.state.screen.ratio}
+              height={this.state.screen.height * this.state.screen.ratio}
+            />
           </div>
         </div>
-
-
-        <div style={{
-          display: "flex" }}>
-          <canvas ref="canvas"
-            width={this.state.screen.width * this.state.screen.ratio}
-            height={this.state.screen.height * this.state.screen.ratio}
-          />
-        </div>
-
-
-      </div>
     );
   }
 }
