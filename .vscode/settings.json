@@ -1,0 +1,5 @@
+{
+    "markdown.trace": "verbose",
+    "trailing-spaces.logLevel": "log",
+    "typescript.tsserver.log": "normal"
+}
