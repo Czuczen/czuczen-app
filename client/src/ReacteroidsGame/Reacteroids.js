@@ -5,7 +5,7 @@ import { randomNumBetweenExcluding } from './helpers'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser, updateUser, getUserById } from "../actions/authActions";
+import { logoutUser, updateUser, getUserById, getBestUsers } from "../actions/authActions";
 
 const KEY = {
   LEFT:  37,
@@ -19,6 +19,8 @@ const KEY = {
 
 // eslint-disable-next-line no-new-object
 var user = new Object();
+// eslint-disable-next-line no-new-object
+var bestUsers = new  Object();
 
 class Reacteroids extends Component {
   onLogoutClick = e => {
@@ -136,7 +138,8 @@ class Reacteroids extends Component {
     }
   }
 
-  startGame(){
+  startGame()
+  {
 
     this.setState({
       inGame: true,
@@ -146,6 +149,7 @@ class Reacteroids extends Component {
 
 //=======================================================
     this.getCurrUser(this.props.auth.user.id);
+    this.getBestUsers();
 
     // Make ship
     let ship = new Ship({
@@ -182,6 +186,14 @@ class Reacteroids extends Component {
     }
   };
 
+  getBestUsers = async () =>
+  {
+    if(!Object.keys(bestUsers).length)
+    {
+      bestUsers = await this.props.getBestUsers();
+      console.log("curr bestUsers", bestUsers);
+    }
+  };
 
   getCurrUser = async (userId) =>
   {
@@ -268,6 +280,23 @@ class Reacteroids extends Component {
     return false;
   }
 
+  renderBestPlayers = () =>
+  {
+    // eslint-disable-next-line no-array-constructor
+    var bestPlayers = Array()
+
+    if(bestUsers.length)
+    {
+      for(var user of bestUsers)
+      {
+        // bestPlayers.push( user.name )
+        bestPlayers.push(<div style={{color: "green"}} ><span key={user.name}  > { user.name }</span><span key={user.name + "-score"} > { user.max_score } </span><br></br></div>)
+      }
+    }
+
+    return bestPlayers;
+  };
+
   render() {
     let endgame;
     let message;
@@ -282,16 +311,22 @@ class Reacteroids extends Component {
 
     if(!this.state.inGame){
       endgame = (
-        <div style={{
-          color: "white",
-          margin: 10
-        }}>
-          <p style={{ color: "red"}}>Koniec gry</p>
-          <p style={{ color: "orange"}}>{message}</p>
-          <button className="btn green"
-            onClick={ this.startGame.bind(this) }>
-            Jeszcze raz?
-          </button>
+        <div>
+          <div style={{
+                    color: "white",
+                    margin: 10
+                  }}>
+                    <p style={{ color: "red"}}>Koniec gry</p>
+                    <p style={{ color: "orange"}}>{message}</p>
+                    <button className="btn green"
+                      onClick={ this.startGame.bind(this) }>
+                      Jeszcze raz?
+                    </button>
+                  </div>
+          <div className="text-center">
+            Najlepsi z najlepszych:
+            { this.renderBestPlayers() }
+          </div>
         </div>
       )
     }
@@ -358,6 +393,7 @@ Reacteroids.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   updateTopScore: PropTypes.func.isRequired,
   getUserById: PropTypes.func.isRequired,
+  getBestUsers: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -367,5 +403,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, updateUser, getUserById }
+  { logoutUser, updateUser, getUserById, getBestUsers }
 )(Reacteroids);

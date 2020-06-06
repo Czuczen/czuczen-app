@@ -169,5 +169,44 @@ router.post("/getUserById",(req, res) =>
   }
 });
 
+router.post("/getBestUsers",(req, res) =>
+{
+  try
+  {
+
+    User.find({}, ['name','max_score'],
+    {
+        skip:0,
+        limit:10,
+        sort:{
+          max_score: -1
+        }
+    }).then((users) =>
+    {
+      console.log("usery ", users);
+
+      res.json({
+        users: users
+      });
+
+    });
+
+
+    // User.find({ $sort: { max_score: -1 }}).limit(10).then((users) =>
+    //   {
+    //     console.log("usery ", users);
+
+    //     res.json({
+    //       users: users
+    //     });
+
+    //   });
+
+  }
+  catch(error)
+  {
+      console.log(error);
+  }
+});
 
 module.exports = router;

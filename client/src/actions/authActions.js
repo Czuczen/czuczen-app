@@ -96,3 +96,19 @@ export const getUserById = (userData, history) => async dispatch => {
 
   return user;
 };
+
+export const getBestUsers = (userData, history) => async dispatch => {
+  var users = await axios.post("/api/users/getBestUsers", userData).then( res =>
+    {
+      console.log("mam userow: ", res);
+      return res.data.users;
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+
+  return users;
+};
