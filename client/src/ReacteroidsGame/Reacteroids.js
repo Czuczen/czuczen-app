@@ -5,9 +5,7 @@ import { randomNumBetweenExcluding } from './helpers'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser, updateUser } from "../actions/authActions";
-
-// import { CurrentUserConsumer } from "../context/CurrentUser.context";
+import { logoutUser, updateUser, getUserById } from "../actions/authActions";
 
 const KEY = {
   LEFT:  37,
@@ -19,11 +17,13 @@ const KEY = {
   SPACE: 32
 };
 
+// eslint-disable-next-line no-new-object
+var user = new Object();
+
 class Reacteroids extends Component {
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
-    this.props.updateUser({_id: "5ecfdb7e0a770726c0dbb9a0", name: "wwwwwwwwwwww", max_score: 930});
   };
 
   constructor() {
@@ -137,10 +137,15 @@ class Reacteroids extends Component {
   }
 
   startGame(){
+
     this.setState({
       inGame: true,
       currentScore: 0,
     });
+
+
+//=======================================================
+    this.getCurrUser(this.props.auth.user.id);
 
     // Make ship
     let ship = new Ship({
@@ -158,10 +163,42 @@ class Reacteroids extends Component {
     this.generateAsteroids(this.state.asteroidCount)
   }
 
+   //================================================================================================================================
+    //update top score
+  updateTopScore = async (topScore) =>
+  {
+    if(!Object.keys(user).length)
+    {
+      user = await this.props.getUserById({_id: this.props.auth.user.id})  
+    }
+    if(Object.keys(user).length)
+    {
+      if(user.max_score < topScore)
+      {
+        user.max_score = topScore;
+        this.props.updateUser(user);
+        console.log("user po aktualizacji max score", user);
+      }
+    }
+  };
+
+
+  getCurrUser = async (userId) =>
+  {
+    if(!Object.keys(user).length)
+    {
+      user = await this.props.getUserById({_id: userId});
+      console.log("curr user", user);
+    }
+  };
+
   gameOver(){
     this.setState({
       inGame: false,
     });
+
+
+    this.updateTopScore(this.state.topScore);
 
     // Replace top score
     if(this.state.currentScore > this.state.topScore){
@@ -231,84 +268,6 @@ class Reacteroids extends Component {
     return false;
   }
 
-
-  // render() {
-  //   // return(
-  //   //   <CurrentUserConsumer>
-  //   //     {({user, logout})} =>
-  //   //     {
-  //   //       <div>
-  //   //         {user
-  //   //         ? <div>Siema, {user.name}</div>
-  //   //         : <div>Zaloguj się</div>}
-  //   //       </div>
-  //   //     }
-  //   //   </CurrentUserConsumer>
-  //   // )
-
-  //   let endgame;
-  //   let message;
-
-  //   if (this.state.currentScore <= 0) {
-  //     message = '0 punktów... Słabo.';
-  //   } else if (this.state.currentScore >= this.state.topScore){
-  //     message = 'Najlepszy wynik z ' + this.state.currentScore + ' punkyów. Wow!';
-  //   } else {
-  //     message = "Chociaż " + this.state.currentScore + ' punktów :)'
-  //   }
-
-  //   if(!this.state.inGame){
-  //     endgame = (
-  //       <div className="endgame">
-  //         <p>Game over, man!</p>
-  //         <p>{message}</p>
-  //         <button
-  //           onClick={ this.startGame.bind(this) }>
-  //           try again?
-  //         </button>
-  //       </div>
-  //     )
-  //   }
-
-  //   return (
-  //     <div>
-  //       { endgame }
-  //       <div style={{
-  //             display: "flex"
-  //           }}>
-  //         <div>
-  //           <div>
-  //             <span className="score current-score" > Wynik: {this.state.currentScore} </span>
-  //             <span className="score top-score" > Najlepszy wynik: {this.state.topScore} </span>
-  //           </div>
-  //             <span className="controls" >
-  //               Użyj [A][S][W][D] lub [←][↑][↓][→] by poruszyć<br/>
-  //               Użyj [SPACE] by strzelić
-  //             </span>
-  //         </div>
-  //         <div>
-  //           <button
-  //           style={{
-  //             width: "auto",
-  //             borderRadius: "3px",
-  //             letterSpacing: "1.5px",
-  //             marginTop: "1rem"
-  //           }}
-  //           onClick={this.onLogoutClick}
-  //           className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-  //           >
-  //           Wyloguj
-  //           </button>
-  //         </div>
-  //       </div>
-  //       <canvas ref="canvas"
-  //         width={this.state.screen.width * this.state.screen.ratio}
-  //         height={this.state.screen.height * this.state.screen.ratio}
-  //       />
-  //     </div>
-  //   );
-  // }
-
   render() {
     let endgame;
     let message;
@@ -352,6 +311,9 @@ class Reacteroids extends Component {
                 <span className="score top-score" > Najlepszy wynik:
                 <span style={{color: "green"}}> { this.state.topScore } </span>
                  </span>
+                 <span className="score top-score" > Życiowy rekord:
+                <span style={{color: "yellow"}}> { user.max_score } </span>
+                 </span>
               </div>
                 <span className="controls" >
                   Użyj
@@ -394,7 +356,8 @@ class Reacteroids extends Component {
 
 Reacteroids.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  updateUser: PropTypes.func.isRequired,
+  updateTopScore: PropTypes.func.isRequired,
+  getUserById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -404,5 +367,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, updateUser }
+  { logoutUser, updateUser, getUserById }
 )(Reacteroids);

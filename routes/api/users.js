@@ -116,7 +116,7 @@ router.post("/update", (req, res) =>
 {
   try
   {
-    console.log("request body w api:",  req.body);
+    console.log("!!!!!!!!!!!!!!request body w api:",  req.body);
     var userId = req.body._id;
 
       const filter = {
@@ -130,12 +130,38 @@ router.post("/update", (req, res) =>
 
       User.findOneAndUpdate(filter, update, {useFindAndModify: false}, (error, doc) =>
       {
-        console.log("error w find and update", error);
-        console.log("użytkownik przed update", doc);
+        console.log("!!!!!!!!error w find and update", error);
+        console.log("!!!!!!!!!!!!!użytkownik przed update", doc);
       }
       ).then(res => {
-        console.log("res po update", res);
+        console.log("!!!!!!!!!!!!res po update", res);
       });
+  }
+  catch(error)
+  {
+      console.log(error);
+  }
+});
+
+router.post("/getUserById",(req, res) =>
+{
+  try
+  {
+    console.log("!!!!!!!!!!getUserById w api jego body",  req.body);
+    var userId = req.body._id;
+    console.log("!!!!!!!!!!!!!user id etUserById w api", userId);
+
+    User.findOne({_id: userId}).then(user =>
+      {
+        console.log("pobrany user ", user);
+
+      res.json({
+        user: user
+      });
+
+      return user;
+      });
+
   }
   catch(error)
   {

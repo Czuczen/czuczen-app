@@ -72,11 +72,27 @@ export const updateUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/update", userData)
     // .then(res => history.push("/login"))
-    .then(res => console.log("response z api: ", res))
+    .then(res => console.log("updateUser response w authActions: ", res))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
     );
+};
+
+export const getUserById = (userData, history) => async dispatch => {
+  var user = await axios.post("/api/users/getUserById", userData).then( res =>
+    {
+      console.log("req z getUserById w authActions: ", res);
+      return res.data.user;
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+
+  return user;
 };

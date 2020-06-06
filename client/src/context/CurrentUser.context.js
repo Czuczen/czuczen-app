@@ -1,40 +1,40 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 
-const CurrentUserContext = React.createContext();
+// const CurrentUserContext = React.createContext();
 
-export class CurrentUserProvider extends Component {
-    state = {
-        user: null
-    }
+// export class CurrentUserProvider extends Component {
+//     state = {
+//         user: null
+//     }
 
-    login = () =>
-    {
-        this.setState({
-            user: {
-                name: ""
-            }
-        })
-    }
+//     login = () =>
+//     {
+//         this.setState({
+//             user: {
+//                 name: ""
+//             }
+//         })
+//     }
 
-    logout = () =>
-    {
-        this.setState({user: null})
-    }
+//     logout = () =>
+//     {
+//         this.setState({user: null})
+//     }
 
-    render(){
-        const { children } = this.props;
-        return(
-            <CurrentUserContext.Provider
-            value={{
-                login: this.login,
-                logout: this.logout,
-                user: this.state.user
-            }}
-            >
-                { children }
-            </CurrentUserContext.Provider>
-        )
-    }
-}
+//     render(){
+//         const { children } = this.props;
+//         return(
+//             <CurrentUserContext.Provider
+//             value={{
+//                 login: this.login,
+//                 logout: this.logout,
+//                 user: this.state.user
+//             }}
+//             >
+//                 { children }
+//             </CurrentUserContext.Provider>
+//         )
+//     }
+// }
 
-export const CurrentUserConsumer = CurrentUserContext.Consumer;
+// export const CurrentUserConsumer = CurrentUserContext.Consumer;
