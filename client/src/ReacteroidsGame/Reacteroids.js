@@ -169,7 +169,7 @@ class Reacteroids extends Component {
   {
     if(!Object.keys(user).length)
     {
-      user = await this.props.getUserById({_id: this.props.auth.user.id})  
+      user = await this.props.getUserById({_id: this.props.auth.user.id});
     }
     if(Object.keys(user).length)
     {
@@ -198,7 +198,7 @@ class Reacteroids extends Component {
     });
 
 
-    this.updateTopScore(this.state.topScore);
+    this.updateTopScore( this.state.currentScore > this.state.topScore ? this.state.currentScore : this.state.topScore );
 
     // Replace top score
     if(this.state.currentScore > this.state.topScore){
