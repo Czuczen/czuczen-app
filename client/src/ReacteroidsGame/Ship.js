@@ -23,6 +23,7 @@ export default class Ship {
     this.delete = true;
     this.onDie();
 
+
     // Explode
     for (let i = 0; i < 60; i++) {
       const particle = new Particle({

@@ -161,10 +161,6 @@ class Reacteroids extends Component {
       currentScore: 0,
     });
 
-
-//=======================================================
-    this.getCurrUser(this.props.auth.user.id);
-
     // Make ship
     let ship = new Ship({
       position: {
@@ -185,46 +181,43 @@ class Reacteroids extends Component {
     //update top score
   updateTopScore = async (topScore) =>
   {
-    if(!Object.keys(user).length)
-    {
+    // if(!Object.keys(user).length)
+    // {
       user = await this.props.getUserById({_id: this.props.auth.user.id});
-    }
-    if(Object.keys(user).length)
-    {
+    // }
+    // if(Object.keys(user).length)
+    // {
       if(user.max_score < topScore)
       {
         user.max_score = topScore;
         this.props.updateUser(user);
         console.log("user po aktualizacji max score", user);
       }
-    }
+    // }
   };
 
   getBestUsers = async () =>
   {
-    if(!Object.keys(bestUsers).length)
-    {
+    // if(!Object.keys(bestUsers).length)
+    // {
       bestUsers = await this.props.getBestUsers();
       console.log("curr bestUsers", bestUsers);
-    }
+    // }
   };
 
   getCurrUser = async (userId) =>
   {
-    if(!Object.keys(user).length)
-    {
+    // if(!Object.keys(user).length)
+    // {
       user = await this.props.getUserById({_id: userId});
       console.log("curr user", user);
-    }
+    // }
   };
 
   gameOver(){
     this.setState({
       inGame: false,
     });
-
-    this.updateTopScore( this.state.currentScore > this.state.topScore ? this.state.currentScore : this.state.topScore );
-    this.getBestUsers();
 
     // Replace top score
     if(this.state.currentScore > this.state.topScore){
@@ -233,6 +226,11 @@ class Reacteroids extends Component {
       });
       localStorage['topscore'] = this.state.currentScore;
     }
+
+    this.getCurrUser(this.props.auth.user.id);
+    this.updateTopScore( this.state.currentScore > this.state.topScore ? this.state.currentScore : this.state.topScore );
+    this.getBestUsers();
+
   }
 
   generateAsteroids(howMany){
@@ -308,6 +306,9 @@ class Reacteroids extends Component {
       }
     }
 
+    // this.setState({
+    //   bestPlayers: bestPlayers
+    // })
     return bestPlayers;
   };
 
