@@ -114,9 +114,17 @@ class Reacteroids extends Component {
     //   this.generateAsteroids(count)
     // }
 
-
-    if(this.asteroids.length < 10){
-      let count = this.state.asteroidCount + 1;
+    var countBigAsteroids = 0;
+    for(let currAsteroid of this.asteroids)
+    {
+      if(currAsteroid.radius === 80)
+      {
+        countBigAsteroids++;
+      }
+    }
+    if(countBigAsteroids === 0)
+    {
+      let count = this.state.asteroidCount + 5;
       this.setState({ asteroidCount: count });
       this.generateAsteroids(count)
     }
@@ -234,8 +242,8 @@ class Reacteroids extends Component {
       let asteroid = new Asteroid({
         size: 80,
         position: {
-          x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
-          y: randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
+          x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-200, ship.position.x+200),
+          y: randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-200, ship.position.y+200)
         },
         create: this.createObject.bind(this),
         addScore: this.addScore.bind(this)

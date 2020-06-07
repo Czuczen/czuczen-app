@@ -9,8 +9,8 @@ export default class Bullet {
     };
     this.rotation = args.ship.rotation;
     this.velocity = {
-      x:posDelta.x / 2,
-      y:posDelta.y / 2
+      x:posDelta.x / 1.5,
+      y:posDelta.y / 1.5
     };
     this.radius = 2;
   }

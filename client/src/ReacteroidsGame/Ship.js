@@ -10,8 +10,8 @@ export default class Ship {
       y: 0
     }
     this.rotation = 0;
-    this.rotationSpeed = 6;
-    this.speed = 0.15;
+    this.rotationSpeed = 8;
+    this.speed = 0.30;
     this.inertia = 0.99;
     this.radius = 20;
     this.lastShot = 0;
@@ -82,7 +82,7 @@ export default class Ship {
     if(state.keys.right){
       this.rotate('RIGHT');
     }
-    if(state.keys.space && Date.now() - this.lastShot > 300){
+    if(state.keys.space && Date.now() - this.lastShot > 250){
       const bullet = new Bullet({ship: this});
       this.create(bullet, 'bullets');
       this.lastShot = Date.now();
