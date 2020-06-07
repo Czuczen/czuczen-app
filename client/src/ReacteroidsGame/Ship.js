@@ -10,8 +10,8 @@ export default class Ship {
       y: 0
     }
     this.rotation = 0;
-    this.rotationSpeed = 8;
-    this.speed = 0.30;
+    this.rotationSpeed = 7;
+    this.speed = 0.20;
     this.inertia = 0.99;
     this.radius = 20;
     this.lastShot = 0;

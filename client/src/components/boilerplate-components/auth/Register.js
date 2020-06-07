@@ -19,9 +19,9 @@ class Register extends Component {
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+    // if (this.props.auth.isAuthenticated) {
+    //   this.props.history.push("/dashboard");
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,6 +84,7 @@ class Register extends Component {
               </div>
               <div className="input-field col s12">
                 <input
+                  placeholder="Email może być zmyślony. Na przykład: zmyślonanazwa@czuczengames.pl"
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
