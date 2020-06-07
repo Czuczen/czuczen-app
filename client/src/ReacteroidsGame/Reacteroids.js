@@ -108,7 +108,14 @@ class Reacteroids extends Component {
     context.globalAlpha = 1;
 
     // Next set of asteroids
-    if(!this.asteroids.length){
+    // if(!this.asteroids.length){
+    //   let count = this.state.asteroidCount + 1;
+    //   this.setState({ asteroidCount: count });
+    //   this.generateAsteroids(count)
+    // }
+
+
+    if(this.asteroids.length < 10){
       let count = this.state.asteroidCount + 1;
       this.setState({ asteroidCount: count });
       this.generateAsteroids(count)
@@ -149,7 +156,6 @@ class Reacteroids extends Component {
 
 //=======================================================
     this.getCurrUser(this.props.auth.user.id);
-    this.getBestUsers();
 
     // Make ship
     let ship = new Ship({
@@ -209,8 +215,8 @@ class Reacteroids extends Component {
       inGame: false,
     });
 
-
     this.updateTopScore( this.state.currentScore > this.state.topScore ? this.state.currentScore : this.state.topScore );
+    this.getBestUsers();
 
     // Replace top score
     if(this.state.currentScore > this.state.topScore){
@@ -290,7 +296,7 @@ class Reacteroids extends Component {
       for(var user of bestUsers)
       {
         // bestPlayers.push( user.name )
-        bestPlayers.push(<div style={{color: "green"}} ><span key={user.name}  > { user.name }</span><span key={user.name + "-score"} > { user.max_score } </span><br></br></div>)
+        bestPlayers.push(<div style={{color: "green", margin: 10}} ><span key={user.name}  > { user.name }</span><span key={user.name + "-score"} > { user.max_score } </span><br></br></div>)
       }
     }
 
@@ -322,6 +328,9 @@ class Reacteroids extends Component {
                       onClick={ this.startGame.bind(this) }>
                       Jeszcze raz?
                     </button>
+                    <div>
+                      Użyj <span style={{color: "green"}}> [ TAB ] [ SPACJA ] </span> by powtórzyć
+                    </div>
                   </div>
           <div className="text-center">
             Najlepsi z najlepszych:

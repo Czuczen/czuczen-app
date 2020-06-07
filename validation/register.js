@@ -12,7 +12,7 @@ module.exports = function validateRegisterInput(data) {
 
   // Name checks
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Pole imię jest wymagane";
+    errors.name = "Pole nick jest wymagane";
   }
 
   // Email checks
