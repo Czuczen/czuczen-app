@@ -5,8 +5,8 @@ export default class Asteroid {
   constructor(args) {
     this.position = args.position
     this.velocity = {
-      x: randomNumBetween(-2.0, 2.0),
-      y: randomNumBetween(-2.0, 2.0)
+      x: randomNumBetween(-1.2, 1.2),
+      y: randomNumBetween(-1.2, 1.2)
     }
     this.rotation = 0;
     this.rotationSpeed = randomNumBetween(-1, 1)

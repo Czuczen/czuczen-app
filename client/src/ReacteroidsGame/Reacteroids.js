@@ -44,7 +44,7 @@ class Reacteroids extends Component {
         down  : 0,
         space : 0,
       },
-      asteroidCount: 3,
+      asteroidCount: 10,
       currentScore: 0,
       topScore: localStorage['topscore'] || 0,
       inGame: false
@@ -124,7 +124,7 @@ class Reacteroids extends Component {
     }
     if(countBigAsteroids === 0)
     {
-      let count = this.state.asteroidCount + 3;
+      let count = this.state.asteroidCount;
       this.setState({ asteroidCount: count });
       this.generateAsteroids(count)
     }
@@ -174,7 +174,7 @@ class Reacteroids extends Component {
 
     // Make asteroids
     this.asteroids = [];
-    this.generateAsteroids(this.state.asteroidCount + 3)
+    this.generateAsteroids(this.state.asteroidCount)
   }
 
    //================================================================================================================================
