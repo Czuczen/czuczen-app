@@ -44,8 +44,9 @@ class Reacteroids extends Component {
         down  : 0,
         space : 0,
       },
-      asteroidCount: 10,
+      asteroidCount: 6,
       currentScore: 0,
+      increment: 0,
       topScore: localStorage['topscore'] || 0,
       inGame: false
     }
@@ -126,7 +127,8 @@ class Reacteroids extends Component {
     {
       let count = this.state.asteroidCount;
       this.setState({ asteroidCount: count });
-      this.generateAsteroids(count)
+      this.generateAsteroids(count + this.state.increment)
+      this.setState({ increment: this.state.increment + 2 });
     }
 
     // Check for colisions
@@ -159,6 +161,7 @@ class Reacteroids extends Component {
     this.setState({
       inGame: true,
       currentScore: 0,
+      increment: 0
     });
 
     // Make ship
